@@ -1,7 +1,12 @@
+import 'package:currency_converter/features/home/data/repository/currency_repository.dart';
+import 'package:currency_converter/features/home/domain/usecase/home_usecase.dart';
 import 'package:currency_converter/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // dependencies
+  HomeUsecase.init(CurrencyRepositoryImp());
+  
   runApp(const MyApp());
 }
 
