@@ -1,3 +1,4 @@
+import 'package:currency_converter/features/home/data/data_sources/cache_service.dart';
 import 'package:currency_converter/features/home/data/data_sources/cbr_service.dart';
 import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
 import 'package:currency_converter/features/home/data/mapper/currency_mapper.dart';
@@ -11,9 +12,18 @@ class CurrencyRepositoryImp implements CurrencyRepository{
 
   @override
   Future<CurrenciesNotch?> getCurrenciesNotch() async {
+    CurrenciesNotch? currenciesNotch = CacheService.getCached();
+    if (currenciesNotch != null) {
+      return currenciesNotch;
+    }
+    
     try {
       CbrDto response = await _cbrService.getExchangeRates();
-      return CurrencyMapper.fromDto(response);
+      currenciesNotch = CurrencyMapper.fromDto(response);
+      if (currenciesNotch != null) {
+        CacheService.cache(currenciesNotch);
+      }
+      return currenciesNotch;
     } catch (e) {
       return null;
     }

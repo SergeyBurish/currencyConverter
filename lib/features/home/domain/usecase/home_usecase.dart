@@ -1,7 +1,8 @@
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
+import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
 
 abstract interface class CurrencyProducer{
-    Future<String> getDefaultCurrency();
+    Future<CurrencyEntity?> getDefaultCurrency();
 }
 
 abstract interface class CurrencyRepository{
@@ -21,9 +22,14 @@ class _HomeUsecaseImp implements CurrencyProducer{
   final CurrencyRepository repository;
 
   _HomeUsecaseImp({required this.repository});
+
   @override
-  Future<String> getDefaultCurrency() async {
-    await repository.getCurrenciesNotch();
-    return Future.delayed(const Duration(seconds: 1), () => "usd");
+  Future<CurrencyEntity?> getDefaultCurrency() async {
+    CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
+    CurrencyEntity? usd = currenciesNotch?.currencies.firstWhere((element) => element.charCode == "USD");
+    if (usd != null) {
+      return usd;
+    }
+    return currenciesNotch?.currencies.first;
   }
 }

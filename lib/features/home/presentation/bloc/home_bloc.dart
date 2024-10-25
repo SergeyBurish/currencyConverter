@@ -1,3 +1,4 @@
+import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
 import 'package:currency_converter/features/home/domain/usecase/home_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<HomeScreenInitEvent>((event, emit) async {
-      String defCurrency = await HomeUsecase.currencyProducer.getDefaultCurrency();
-      emit(DefCurrencyState(defCurrency: defCurrency));
+      CurrencyEntity? defCurrency = await HomeUsecase.currencyProducer.getDefaultCurrency();
+      if (defCurrency != null) {
+        emit(DefCurrencyState(defCurrency: defCurrency.name));
+      }
     });
   }
 }
