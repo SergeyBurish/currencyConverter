@@ -44,20 +44,51 @@ class _HomeScreenState extends State<_HomeScreen> {
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
         centerTitle: false,
       ),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.amber,
-            width: 100.w,
-            height: 200.h,
+      body:  Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: TabBar(
+              dividerColor: Colors.transparent,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.redAccent
+              ),
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelColor: Colors.white,
+              tabs: [
+                SizedBox(
+                  height: 40,
+                  child: Center(child: Text("Конвертер")) // L10n
+                ),
+                SizedBox(
+                  height: 40,
+                  child: Center(child: Text("Курсы валют"))), // L10n
+              ],
+            ),
+            body: TabBarView(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      color: Colors.amber,
+                      width: 100.w,
+                      height: 200.h,
+                    ),
+                    Center(child: BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return Text("Default Currency: ${state.defCurrency}");
+                      },
+                      buildWhen: (previous, current) => current is DefCurrencyState,
+                    )),
+                  ],
+                ),
+                const Icon(Icons.directions_car, size: 100,)
+              ]
+            ),
           ),
-          Center(child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return Text("Default Currency: ${state.defCurrency}");
-            },
-            buildWhen: (previous, current) => current is DefCurrencyState,
-          )),
-        ],
+        ),
       ),
     );
   }
