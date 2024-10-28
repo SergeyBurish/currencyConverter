@@ -1,4 +1,4 @@
-import 'package:circle_flags/circle_flags.dart';
+import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
               child: TextField()
             ),
             DoubleIconTextButton( 
-              icon1: CircleFlag(widget.countryCode, size: 20,),
+              icon1: CircleFlag(countryCode: widget.countryCode,),
               label: Text(widget.currencyCode),
               icon2: const Icon(Icons.keyboard_arrow_down),
               onPressed: widget.onCountryPressed,

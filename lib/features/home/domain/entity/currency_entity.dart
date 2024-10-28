@@ -6,5 +6,5 @@ class CurrencyEntity {
   final double rate;
 
   CurrencyEntity({required this.name, required this.charCode, required this.rate}):
-    countryCode = charCode.substring(0, 2); // TODO: handle exceptions
+    countryCode = charCode.substring(0, 2);
 }

@@ -1,5 +1,5 @@
-import 'package:circle_flags/circle_flags.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
+import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +28,7 @@ class _ExchangeRatesViewState extends State<ExchangeRatesView> {
             return Padding(
               padding: const EdgeInsets.only(top: 10),
               child: DoubleIconTextButton(
-                icon1: CircleFlag(state.currencies[index].countryCode, size: 20,),
+                icon1: CircleFlag(countryCode: state.currencies[index].countryCode,),
                 label: Text(state.currencies[index].name),
                 expanded: true,
                 bgColor: const Color.fromARGB(107, 214, 231, 244),

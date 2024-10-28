@@ -1,4 +1,4 @@
-import 'package:circle_flags/circle_flags.dart';
+import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_widget.dart';
@@ -63,15 +63,12 @@ class _ConverterViewState extends State<ConverterView> {
                               child: BlocBuilder<HomeBloc, HomeState>(
                                 builder: (context, state) {
                                   return ListView.builder(
-                                    // padding: const EdgeInsets.all(8),
                                     itemCount: state.currencies.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
+                                    itemBuilder: (BuildContext context, int index) {
                                       return Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(top: 10),
                                         child: DoubleIconTextButton(
-                                          icon1: CircleFlag(state.currencies[index].countryCode, size: 20,),
+                                          icon1: CircleFlag(countryCode: state.currencies[index].countryCode,),
                                           label: Text(state.currencies[index].charCode),
                                           icon2: const Icon(Icons.radio_button_unchecked),
                                           expanded: true,
