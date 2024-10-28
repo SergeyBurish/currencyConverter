@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   dio: ^5.7.0
   flutter_screenutil: ^5.9.3
+  circle_flags: ^5.0.0
 
 dev_dependencies:
   flutter_test:

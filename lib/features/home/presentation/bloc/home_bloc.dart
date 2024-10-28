@@ -15,7 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeScreenInitEvent>((event, emit) async {
       CurrencyEntity? defCurrency = await HomeUsecase.currencyProducer.getDefaultCurrency();
       if (defCurrency != null) {
-        emit(DefCurrencyState(defCurrency: defCurrency.name));
+        emit(SelectedCurrencyState(selectedCurrency: defCurrency));
       }
     });
 
