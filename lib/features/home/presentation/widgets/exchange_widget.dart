@@ -1,9 +1,12 @@
+import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeWidget extends StatefulWidget {
   final String header;
   final String footer;
-  const ExchangeWidget({super.key, required this.header, required this.footer});
+  final void Function()? onCountryPressed;
+  const ExchangeWidget({
+    super.key, required this.header, required this.footer, this.onCountryPressed});
 
   @override
   State<ExchangeWidget> createState() => _ExchangeWidgetState();
@@ -21,17 +24,11 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
             const Expanded(
               child: TextField()
             ),
-            TextButton.icon(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.white,
-              ),
-              onPressed: () {},
-              icon: const Icon(Icons.flag_outlined),
-              label: const Text(
-                'RUR',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+            DoubleIconTextButton( 
+              icon1: const Icon(Icons.flag_outlined),
+              label: const Text('RUR'),
+              icon2: const Icon(Icons.keyboard_arrow_down),
+              onPressed: widget.onCountryPressed,
             ),
           ],
         ),

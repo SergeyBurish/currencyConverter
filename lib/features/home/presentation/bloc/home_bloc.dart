@@ -18,5 +18,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(DefCurrencyState(defCurrency: defCurrency.name));
       }
     });
+
+    on<CurrenciesListOpenEvent>((event, emit) async {
+      List<CurrencyEntity>? currencies = await HomeUsecase.currencyProducer.getCurrenciesList();
+      if (currencies != null) {
+        emit(CurrenciesListState(currencies: currencies));
+      }
+    });
   }
 }

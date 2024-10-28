@@ -1,5 +1,6 @@
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/converter_view.dart';
+import 'package:currency_converter/features/home/presentation/widgets/exchange_rates_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<_HomeScreen> {
             body: const TabBarView(
               children: [
                 ConverterView(),
-                Icon(Icons.directions_car, size: 100,)
+                ExchangeRatesView(),
               ]
             ),
           ),

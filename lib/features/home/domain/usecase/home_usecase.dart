@@ -3,6 +3,7 @@ import 'package:currency_converter/features/home/domain/entity/currency_entity.d
 
 abstract interface class CurrencyProducer{
     Future<CurrencyEntity?> getDefaultCurrency();
+    Future<List<CurrencyEntity>?> getCurrenciesList();
 }
 
 abstract interface class CurrencyRepository{
@@ -31,5 +32,11 @@ class _HomeUsecaseImp implements CurrencyProducer{
       return usd;
     }
     return currenciesNotch?.currencies.first;
+  }
+  
+  @override
+  Future<List<CurrencyEntity>?> getCurrenciesList() async {
+    CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
+    return currenciesNotch?.currencies;
   }
 }

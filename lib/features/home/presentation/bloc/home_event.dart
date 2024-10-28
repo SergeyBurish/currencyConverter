@@ -5,3 +5,6 @@ sealed class HomeEvent {}
 
 class HomeScreenInitEvent extends HomeEvent {
 }
+
+class CurrenciesListOpenEvent extends HomeEvent {
+}
