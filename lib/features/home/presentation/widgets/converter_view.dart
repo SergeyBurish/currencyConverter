@@ -1,6 +1,5 @@
-import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
-import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
+import 'package:currency_converter/features/home/presentation/widgets/currency_list_dilog/currency_list_dilog.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,67 +28,10 @@ class _ConverterViewState extends State<ConverterView> {
                 flex: 2,
                 child: Container(),
               ),
-              Flexible(
+              const Flexible(
                 flex: 8,
                 child: SizedBox.expand(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Material( // Wrapping the Text widget in a Material widget will also add a default style to your widget: // https://mixable.blog/flutter-red-text-and-yellow-lines-in-text-widget/
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Выберите валюту", // L10n
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                                const Spacer(),
-                                IconButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  icon: const Icon(Icons.close)
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: BlocBuilder<HomeBloc, HomeState>(
-                                builder: (context, state) {
-                                  return ListView.builder(
-                                    itemCount: state.currencies.length,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: DoubleIconTextButton(
-                                          icon1: CircleFlag(countryCode: state.currencies[index].countryCode,),
-                                          label: Text(state.currencies[index].charCode),
-                                          icon2: const Icon(Icons.radio_button_unchecked),
-                                          expanded: true,
-                                          bgColor: const Color.fromARGB(107, 214, 231, 244),
-                                        ),
-                                      );
-                                    }
-                                  );
-                                },
-                                buildWhen: (previous, current) => current is CurrenciesListState,
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: const Text("Применить") // L10n
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: CurrencyListDilog(),
                 ),
               ),
             ],
@@ -132,7 +74,7 @@ class _ConverterViewState extends State<ConverterView> {
                       ),
                       Flexible(
                         child: Text(
-                          "Все переводы курсов конвертер осуществляет на основе стоимости валют по данным ЦБ РФ",
+                          "Все переводы курсов конвертер осуществляет на основе стоимости валют по данным ЦБ РФ", // L10n
                           style: TextStyle(fontSize: 10.sp),
                         ),
                       ),
@@ -165,7 +107,7 @@ class _ConverterViewState extends State<ConverterView> {
               padding: const EdgeInsets.only(top: 10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(86, 245, 160, 188),
+                  color: const Color.fromARGB(52, 245, 117, 215),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
@@ -180,13 +122,6 @@ class _ConverterViewState extends State<ConverterView> {
                 ),
               ),
             ),
-            Center(
-                child: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                return Text("Default Currency: ${state.defCurrency}");
-              },
-              buildWhen: (previous, current) => current is DefCurrencyState,
-            )),
           ],
         );
       },

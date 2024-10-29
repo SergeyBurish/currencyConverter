@@ -25,5 +25,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(CurrenciesListState(currencies: currencies));
       }
     });
+
+    on<CurrencySelectedEvent>((event, emit) async {
+      emit(SelectedCurrencyState(selectedCurrency: event.selectedCurrency));
+    });
   }
 }

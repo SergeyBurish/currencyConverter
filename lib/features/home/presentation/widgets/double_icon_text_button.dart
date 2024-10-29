@@ -6,6 +6,7 @@ class DoubleIconTextButton extends StatefulWidget {
   final Widget? icon2;
   final void Function()? onPressed;
   final bool expanded;
+  final bool bordered;
   final Color bgColor;
   const DoubleIconTextButton({
     super.key, 
@@ -14,6 +15,7 @@ class DoubleIconTextButton extends StatefulWidget {
     this.icon2, 
     this.onPressed, 
     this.expanded = false, 
+    this.bordered = false, 
     this.bgColor = Colors.white});
 
   @override
@@ -27,6 +29,7 @@ class _DoubleIconTextButtonState extends State<DoubleIconTextButton> {
       onTap: widget.onPressed,
       child: Container(
         decoration: BoxDecoration(
+          border: widget.bordered ? Border.all(color: Colors.red) : null,
           borderRadius: BorderRadius.circular(10),
           color: widget.bgColor
         ),
