@@ -91,11 +91,11 @@ class _ConverterViewState extends State<ConverterView> {
                   color: const Color.fromARGB(51, 72, 164, 240),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: ExchangeWidget(
                     header: "Хочу обменять:",
-                    footer: "1 RUR = 90 USD",
+                    footer: state.selectedCurrency?.fromRUR ?? "Not Set",
                     currencyCode: 'RUR',
                     countryCode: 'RU',
                   ),
@@ -114,9 +114,10 @@ class _ConverterViewState extends State<ConverterView> {
                   padding: const EdgeInsets.all(10.0),
                   child: ExchangeWidget(
                     header: "Вы получите:",
-                    footer: "1 USD = 0.011 RUR",
+                    footer: state.selectedCurrency?.toRUR ?? "Not Set",
                     currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
                     countryCode: state.selectedCurrency?.countryCode ?? "us",
+                    inputEnabled: false,
                     onCountryPressed: () => showCountriesDoalog(context),
                   ),
                 ),
