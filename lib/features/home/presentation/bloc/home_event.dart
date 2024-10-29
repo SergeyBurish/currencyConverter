@@ -14,3 +14,9 @@ class CurrencySelectedEvent extends HomeEvent {
 
   CurrencySelectedEvent({required this.selectedCurrency});
 }
+
+class ValueFromUpdatedEvent extends HomeEvent {
+  final String valueFrom;
+
+  ValueFromUpdatedEvent({required this.valueFrom});
+}

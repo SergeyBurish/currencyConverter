@@ -13,7 +13,6 @@ class ConverterView extends StatefulWidget {
 }
 
 class _ConverterViewState extends State<ConverterView> {
-
   void showCountriesDoalog(BuildContext context) {
     context.read<HomeBloc>().add(CurrenciesListOpenEvent());
     showGeneralDialog(
@@ -92,12 +91,13 @@ class _ConverterViewState extends State<ConverterView> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: ExchangeWidget(
                     header: "Хочу обменять:",
                     footer: state.selectedCurrency?.fromRUR ?? "Not Set",
                     currencyCode: 'RUR',
                     countryCode: 'RU',
+                    onValueChanged: (val) => context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val)),
                   ),
                 ),
               ),
@@ -112,13 +112,19 @@ class _ConverterViewState extends State<ConverterView> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: ExchangeWidget(
-                    header: "Вы получите:",
-                    footer: state.selectedCurrency?.toRUR ?? "Not Set",
-                    currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
-                    countryCode: state.selectedCurrency?.countryCode ?? "us",
-                    inputEnabled: false,
-                    onCountryPressed: () => showCountriesDoalog(context),
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, valState) {
+                      return ExchangeWidget(
+                        header: "Вы получите:",
+                        footer: state.selectedCurrency?.toRUR ?? "Not Set",
+                        currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
+                        countryCode: state.selectedCurrency?.countryCode ?? "",
+                        text: valState.valueTo,
+                        inputEnabled: false,
+                        onCountryPressed: () => showCountriesDoalog(context),
+                      );
+                    },
+                    buildWhen: (previous, current) => current is ValueToState,
                   ),
                 ),
               ),

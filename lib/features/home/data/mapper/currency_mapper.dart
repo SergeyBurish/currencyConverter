@@ -18,7 +18,8 @@ class CurrencyMapper {
           currencies.add(CurrencyEntity(
             name: currencyDto.name!, 
             charCode: currencyDto.charCode!, 
-            rate: currencyDto.value! * currencyDto.nominal!)
+            value: currencyDto.value!,
+            nominal: currencyDto.nominal!)
           );
         }
       }
