@@ -118,7 +118,7 @@ class _ConverterViewState extends State<ConverterView> {
                         header: "Вы получите:",
                         footer: state.selectedCurrency?.toRUR ?? "Not Set",
                         currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
-                        countryCode: state.selectedCurrency?.countryCode ?? "",
+                        countryCode: state.selectedCurrency?.countryCode ?? "zz",
                         text: valState.valueTo,
                         inputEnabled: false,
                         onCountryPressed: () => showCountriesDoalog(context),

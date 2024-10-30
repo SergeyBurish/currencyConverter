@@ -15,12 +15,25 @@ class CurrencyListItem extends StatelessWidget {
     this.selected = false,
     this.onPressed,});
 
+
+
   @override
   Widget build(BuildContext context) {
     return DoubleIconTextButton(
-      label: Text(code), 
+      label: RichText(text: 
+        TextSpan(
+          style: const TextStyle(color: Colors.black),
+          children: <TextSpan>[
+            TextSpan(text: code,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: " / $name")
+          ]
+        ),
+      ), 
       icon1: icon,
-      icon2: const Icon(Icons.radio_button_unchecked),
+      icon2: selected 
+        ? const Icon(Icons.trip_origin, color: Colors.red,)
+        : const Icon(Icons.panorama_fish_eye, color: Colors.black12,),
       expanded: true,
       bordered: selected, 
       bgColor: selected 

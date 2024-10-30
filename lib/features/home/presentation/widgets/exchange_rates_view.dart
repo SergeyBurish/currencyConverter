@@ -29,7 +29,7 @@ class _ExchangeRatesViewState extends State<ExchangeRatesView> {
               padding: const EdgeInsets.only(top: 10),
               child: DoubleIconTextButton(
                 icon1: CircleFlag(countryCode: state.currencies[index].countryCode,),
-                label: Text(state.currencies[index].name),
+                label: Text("${state.currencies[index].charCode}: ${state.currencies[index].value}${state.currencies[index].nominal > 1 ? " за ${state.currencies[index].nominal}" : ""}"),
                 expanded: true,
                 bgColor: const Color.fromARGB(107, 214, 231, 244),
               ),

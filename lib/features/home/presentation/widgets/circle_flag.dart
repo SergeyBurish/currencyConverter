@@ -14,7 +14,7 @@ class CircleFlag extends StatelessWidget {
       fit: BoxFit.fill,
       flagSize: FlagSize.size_1x1,
       borderRadius: 13,
-      replacement: const Text('?x'),
+      replacement: const Text('?'),
     );
   }
 }
