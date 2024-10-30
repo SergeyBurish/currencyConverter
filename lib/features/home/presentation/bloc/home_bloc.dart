@@ -21,6 +21,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<CurrenciesListOpenEvent>((event, emit) async {
+      await HomeUsecase.currencyProducer.setValueFrom(event.valueFrom);
+
       List<CurrencyEntity>? currencies = await HomeUsecase.currencyProducer.getCurrenciesList();
       if (currencies != null) {
         emit(CurrenciesListState(currencies: currencies));
@@ -33,9 +35,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<ValueFromUpdatedEvent>((event, emit) async {
-      print("on<ValueUpdatedEvent valueFrom ${event.valueFrom}");
       String valueTo =await HomeUsecase.currencyProducer.getValueTo(event.valueFrom);
-      print("on<ValueUpdatedEvent valueTo $valueTo");
+      emit(ValueToState(value: valueTo));
+    });
+
+    on<RecalculateValueToEvent>((event, emit) async {
+      String valueTo =await HomeUsecase.currencyProducer.recalculateValueTo();
       emit(ValueToState(value: valueTo));
     });
   }

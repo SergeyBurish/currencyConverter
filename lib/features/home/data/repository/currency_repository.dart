@@ -42,5 +42,15 @@ class CurrencyRepositoryImp implements CurrencyRepository{
   @override
   Future<CurrencyEntity?> getSelectedCurrency() {
     return _storeService.getSelectedCurrency();
+  }
+  
+  @override
+  Future<void> setValueFrom(String valueFrom) {
+    return _storeService.setValueFrom(valueFrom);
+  }
+  
+  @override
+  Future<String?> getValueFrom() {
+    return _storeService.getValueFrom();
   }  
 }

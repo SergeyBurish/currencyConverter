@@ -7,6 +7,9 @@ class HomeScreenInitEvent extends HomeEvent {
 }
 
 class CurrenciesListOpenEvent extends HomeEvent {
+  final String valueFrom;
+
+  CurrenciesListOpenEvent({required this.valueFrom});
 }
 
 class CurrencySelectedEvent extends HomeEvent {
@@ -19,4 +22,7 @@ class ValueFromUpdatedEvent extends HomeEvent {
   final String valueFrom;
 
   ValueFromUpdatedEvent({required this.valueFrom});
+}
+
+class RecalculateValueToEvent extends HomeEvent {
 }

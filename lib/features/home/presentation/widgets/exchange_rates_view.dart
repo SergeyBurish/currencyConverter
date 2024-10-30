@@ -14,7 +14,7 @@ class ExchangeRatesView extends StatefulWidget {
 class _ExchangeRatesViewState extends State<ExchangeRatesView> {
   @override
   void initState() {
-    context.read<HomeBloc>().add(CurrenciesListOpenEvent());
+    context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: ''));
     super.initState();
   }
 

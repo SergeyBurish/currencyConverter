@@ -67,6 +67,7 @@ class _CurrencyListDilogState extends State<CurrencyListDilog> {
                     child: ElevatedButton(
                       onPressed: () {
                         context.read<HomeBloc>().add(CurrencySelectedEvent(selectedCurrency: state.currencies[_selectedIndex]));
+                        context.read<HomeBloc>().add(RecalculateValueToEvent());
                         Navigator.of(context).pop();
                       },
                       style: const ButtonStyle(

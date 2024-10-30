@@ -13,8 +13,10 @@ class ConverterView extends StatefulWidget {
 }
 
 class _ConverterViewState extends State<ConverterView> {
+  String _valueFrom = "";
+
   void showCountriesDoalog(BuildContext context) {
-    context.read<HomeBloc>().add(CurrenciesListOpenEvent());
+    context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: _valueFrom));
     showGeneralDialog(
       context: context,
       transitionDuration: const Duration(milliseconds: 200),
@@ -38,6 +40,12 @@ class _ConverterViewState extends State<ConverterView> {
         );
       }
     );
+  }
+
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(HomeScreenInitEvent());
+    super.initState();
   }
 
   @override
@@ -97,7 +105,10 @@ class _ConverterViewState extends State<ConverterView> {
                     footer: state.selectedCurrency?.fromRUR ?? "Not Set",
                     currencyCode: 'RUR',
                     countryCode: 'RU',
-                    onValueChanged: (val) => context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val)),
+                    onValueChanged: (val) {
+                      _valueFrom = val;
+                      context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
+                    },
                   ),
                 ),
               ),

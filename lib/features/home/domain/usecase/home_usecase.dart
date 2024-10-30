@@ -5,13 +5,17 @@ abstract interface class CurrencyProducer{
     Future<CurrencyEntity?> getDefaultCurrency();
     Future<List<CurrencyEntity>?> getCurrenciesList();
     Future<void> setSelectedCurrency(CurrencyEntity currency);
+    Future<void> setValueFrom(String valueFrom);
     Future<String> getValueTo(String valueFrom);
+    Future<String> recalculateValueTo();
 }
 
 abstract interface class CurrencyRepository{
     Future<CurrenciesNotch?> getCurrenciesNotch();
     Future<void> setSelectedCurrency(CurrencyEntity currency);
     Future<CurrencyEntity?> getSelectedCurrency();
+    Future<void> setValueFrom(String valueFrom);
+    Future<String?> getValueFrom();
 }
 
 class HomeUsecase {
@@ -30,7 +34,6 @@ class _HomeUsecaseImp implements CurrencyProducer{
 
   @override
   Future<CurrencyEntity?> getDefaultCurrency() async {
-    // return null;
     CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
     CurrencyEntity? usd = currenciesNotch?.currencies.firstWhere((element) => element.charCode == "USD");
     if (usd != null) {
@@ -41,16 +44,29 @@ class _HomeUsecaseImp implements CurrencyProducer{
   
   @override
   Future<List<CurrencyEntity>?> getCurrenciesList() async {
-    // return null;
     CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
     return currenciesNotch?.currencies;
   }
   
   @override
   Future<void> setSelectedCurrency(CurrencyEntity currency) => repository.setSelectedCurrency(currency);
+
+    @override
+  Future<void> setValueFrom(String valueFrom) => repository.setValueFrom(valueFrom);
   
   @override
-  Future<String> getValueTo(String valueFrom) async {
+  Future<String> getValueTo(String valueFrom) => _calculateValueTo(valueFrom);
+  
+  @override
+  Future<String> recalculateValueTo() async {
+    String? valueFrom = await repository.getValueFrom();
+    if (valueFrom != null) {
+      return _calculateValueTo(valueFrom);
+    }
+    return "";
+  }
+
+  Future<String> _calculateValueTo(String valueFrom) async {
     String valueTo = "";
     if (valueFrom.isNotEmpty) {
       CurrencyEntity? selectedCurrency = await repository.getSelectedCurrency();
