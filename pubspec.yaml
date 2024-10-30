@@ -39,6 +39,7 @@ dependencies:
   dio: ^5.7.0
   flutter_screenutil: ^5.9.3
   flag: ^7.0.0
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
