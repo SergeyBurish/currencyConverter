@@ -19,7 +19,10 @@ class CurrencyRepositoryImp implements CurrencyRepository{
   Future<CurrenciesNotch?> getCurrenciesNotch() async {
     CurrenciesNotch? currenciesNotch = CacheService.getCached();
     if (currenciesNotch != null) {
-      return currenciesNotch;
+      Duration difference = DateTime.now().difference(currenciesNotch.localTimestamp);
+      if (difference < const Duration(minutes: 5)) {
+        return currenciesNotch;
+      }
     }
     
     try {

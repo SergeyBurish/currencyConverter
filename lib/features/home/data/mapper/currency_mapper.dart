@@ -24,7 +24,7 @@ class CurrencyMapper {
         }
       }
 
-      return CurrenciesNotch(timestamp: timestamp, currencies: currencies);
+      return CurrenciesNotch(timestamp: timestamp, currencies: currencies, localTimestamp: DateTime.now());
     }
 
     return null;
