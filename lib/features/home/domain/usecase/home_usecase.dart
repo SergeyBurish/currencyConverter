@@ -7,6 +7,7 @@ abstract interface class CurrencyProducer{
     Future<void> setSelectedCurrency(CurrencyEntity currency);
     Future<void> setValueFrom(String valueFrom);
     Future<String> getValueTo(String valueFrom);
+    Future<String> getValueFrom(String valueTo);
     Future<String> recalculateValueTo();
 }
 
@@ -56,6 +57,9 @@ class _HomeUsecaseImp implements CurrencyProducer{
   
   @override
   Future<String> getValueTo(String valueFrom) => _calculateValueTo(valueFrom);
+
+  @override
+  Future<String> getValueFrom(String valueTo) => _calculateValueFrom(valueTo);
   
   @override
   Future<String> recalculateValueTo() async {
@@ -81,5 +85,22 @@ class _HomeUsecaseImp implements CurrencyProducer{
       }
     }
     return valueTo;
+  }
+
+  Future<String> _calculateValueFrom(String valueTo) async {
+    String valueFrom = "";
+    if (valueTo.isNotEmpty) {
+      CurrencyEntity? selectedCurrency = await repository.getSelectedCurrency();
+      if (selectedCurrency != null) {
+        try {
+          final double to = double.parse(valueTo);
+          final double from = to * selectedCurrency.value / selectedCurrency.nominal.toDouble();
+          valueFrom = from.toString();
+        } catch (e) {
+          print(e);
+        }
+      }
+    }
+    return valueFrom;
   }
 }

@@ -100,15 +100,21 @@ class _ConverterViewState extends State<ConverterView> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: ExchangeWidget(
-                    header: "Хочу обменять:",
-                    footer: state.selectedCurrency?.fromRUR ?? "Not Set",
-                    currencyCode: 'RUR',
-                    countryCode: 'RU',
-                    onValueChanged: (val) {
-                      _valueFrom = val;
-                      context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, valState) {
+                      return ExchangeWidget(
+                        header: "Хочу обменять:",
+                        footer: state.selectedCurrency?.fromRUR ?? "Not Set",
+                        currencyCode: 'RUR',
+                        countryCode: 'RU',
+                        text: valState.valueFrom,
+                        onValueChanged: (val) {
+                          _valueFrom = val;
+                          context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
+                        },
+                      );
                     },
+                    buildWhen: (previous, current) => current is ValueFromState,
                   ),
                 ),
               ),
@@ -131,7 +137,7 @@ class _ConverterViewState extends State<ConverterView> {
                         currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
                         countryCode: state.selectedCurrency?.countryCode ?? "zz",
                         text: valState.valueTo,
-                        inputEnabled: false,
+                        onValueChanged: (val) => context.read<HomeBloc>().add(ValueToUpdatedEvent(valueTo: val)),
                         onCountryPressed: () => showCountriesDoalog(context),
                       );
                     },

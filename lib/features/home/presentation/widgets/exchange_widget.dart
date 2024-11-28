@@ -8,7 +8,6 @@ class ExchangeWidget extends StatefulWidget {
   final String footer;
   final String currencyCode;
   final String countryCode;
-  final bool inputEnabled;
   final String? text;
   final void Function(String)? onValueChanged;
   final void Function()? onCountryPressed;
@@ -19,7 +18,6 @@ class ExchangeWidget extends StatefulWidget {
     required this.currencyCode,
     required this.countryCode,
     this.text,
-    this.inputEnabled = true,
     this.onValueChanged,
     this.onCountryPressed,});
 
@@ -51,7 +49,6 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
-                    enabled: widget.inputEnabled,
                     decoration:const InputDecoration(
                       border: InputBorder.none
                     ),

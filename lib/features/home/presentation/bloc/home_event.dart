@@ -24,5 +24,11 @@ class ValueFromUpdatedEvent extends HomeEvent {
   ValueFromUpdatedEvent({required this.valueFrom});
 }
 
+class ValueToUpdatedEvent extends HomeEvent {
+  final String valueTo;
+
+  ValueToUpdatedEvent({required this.valueTo});
+}
+
 class RecalculateValueToEvent extends HomeEvent {
 }
