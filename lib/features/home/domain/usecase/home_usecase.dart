@@ -8,7 +8,7 @@ abstract interface class CurrencyProducer{
     Future<void> setValueFrom(String valueFrom);
     Future<String> getValueTo(String valueFrom);
     Future<String> getValueFrom(String valueTo);
-    Future<String> recalculateValueTo();
+    Future<({String valueFrom, String valueTo})> recalculateValueTo();
 }
 
 abstract interface class CurrencyRepository{
@@ -62,12 +62,13 @@ class _HomeUsecaseImp implements CurrencyProducer{
   Future<String> getValueFrom(String valueTo) => _calculateValueFrom(valueTo);
   
   @override
-  Future<String> recalculateValueTo() async {
+  Future<({String valueFrom, String valueTo})> recalculateValueTo() async {
     String? valueFrom = await repository.getValueFrom();
     if (valueFrom != null) {
-      return _calculateValueTo(valueFrom);
+      String? valueTo = await _calculateValueTo(valueFrom);
+      return (valueFrom: valueFrom, valueTo: valueTo);
     }
-    return "";
+    return (valueFrom: "", valueTo: "");
   }
 
   Future<String> _calculateValueTo(String valueFrom) async {

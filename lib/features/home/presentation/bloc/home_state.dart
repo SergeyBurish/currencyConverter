@@ -45,3 +45,16 @@ class ValueToState extends HomeState {
   @override
   String get valueTo => _valueTo;
 }
+
+class ValuesFromToState extends HomeState {
+  final String _valueFrom;
+  final String _valueTo;
+  ValuesFromToState({required String valueFrom, required String valueTo}) : 
+    _valueFrom = valueFrom, _valueTo = valueTo;
+
+  @override
+  String get valueFrom => _valueFrom;
+
+  @override
+  String get valueTo => _valueTo;
+}

@@ -114,7 +114,7 @@ class _ConverterViewState extends State<ConverterView> {
                         },
                       );
                     },
-                    buildWhen: (previous, current) => current is ValueFromState,
+                    buildWhen: (previous, current) => current is ValueFromState || current is ValuesFromToState,
                   ),
                 ),
               ),
@@ -141,7 +141,7 @@ class _ConverterViewState extends State<ConverterView> {
                         onCountryPressed: () => showCountriesDoalog(context),
                       );
                     },
-                    buildWhen: (previous, current) => current is ValueToState,
+                    buildWhen: (previous, current) => current is ValueToState || current is ValuesFromToState,
                   ),
                 ),
               ),

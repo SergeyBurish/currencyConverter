@@ -45,8 +45,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<RecalculateValueToEvent>((event, emit) async {
-      String valueTo =await HomeUsecase.currencyProducer.recalculateValueTo();
-      emit(ValueToState(value: valueTo));
+      ({String valueFrom, String valueTo}) rez = await HomeUsecase.currencyProducer.recalculateValueTo();
+      emit(ValuesFromToState(valueFrom: rez.valueFrom, valueTo: rez.valueTo));
     });
   }
 }
