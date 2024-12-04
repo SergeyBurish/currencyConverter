@@ -4,6 +4,8 @@ sealed class HomeState {
   // defaults
   CurrencyEntity? selectedCurrency;
   List<CurrencyEntity> get currencies => [];
+  String get fromExpression => "";
+  String get toExpression => "";
   String get valueFrom => "";
   String get valueTo => "";
 }
@@ -12,11 +14,21 @@ final class HomeInitial extends HomeState {}
 
 class SelectedCurrencyState extends HomeState {
   final CurrencyEntity _selectedCurrency;
+  final String _fromExpression;
+  final String _toExpression;
   SelectedCurrencyState({required CurrencyEntity selectedCurrency}) : 
-    _selectedCurrency = selectedCurrency;
+    _selectedCurrency = selectedCurrency,
+    _fromExpression = selectedCurrency.fromRUR,
+    _toExpression = selectedCurrency.toRUR;
 
   @override
   CurrencyEntity? get selectedCurrency => _selectedCurrency;
+
+  @override
+  String get fromExpression => _fromExpression;
+
+  @override
+  String get toExpression => _toExpression;
 }
 
 class CurrenciesListState extends HomeState {

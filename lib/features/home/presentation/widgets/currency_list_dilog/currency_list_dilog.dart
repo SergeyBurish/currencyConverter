@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyListDilog extends StatefulWidget {
-  const CurrencyListDilog({super.key});
+  final bool from;
+  const CurrencyListDilog({super.key, required this.from});
 
   @override
   State<CurrencyListDilog> createState() => _CurrencyListDilogState();
@@ -66,7 +67,11 @@ class _CurrencyListDilogState extends State<CurrencyListDilog> {
                     padding: const EdgeInsets.only(top: 10),
                     child: ElevatedButton(
                       onPressed: () {
-                        context.read<HomeBloc>().add(CurrencySelectedEvent(selectedCurrency: state.currencies[_selectedIndex]));
+                        if (widget.from) {
+                          context.read<HomeBloc>().add(CurrencyFromSelectedEvent(selectedCurrencyFrom: state.currencies[_selectedIndex]));
+                        } else {
+                          context.read<HomeBloc>().add(CurrencyToSelectedEvent(selectedCurrencyTo: state.currencies[_selectedIndex]));
+                        }
                         context.read<HomeBloc>().add(RecalculateValueToEvent());
                         Navigator.of(context).pop();
                       },

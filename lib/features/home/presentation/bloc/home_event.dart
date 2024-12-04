@@ -12,10 +12,16 @@ class CurrenciesListOpenEvent extends HomeEvent {
   CurrenciesListOpenEvent({required this.valueFrom});
 }
 
-class CurrencySelectedEvent extends HomeEvent {
-  final CurrencyEntity selectedCurrency;
+class CurrencyFromSelectedEvent extends HomeEvent {
+  final CurrencyEntity selectedCurrencyFrom;
 
-  CurrencySelectedEvent({required this.selectedCurrency});
+  CurrencyFromSelectedEvent({required this.selectedCurrencyFrom});
+}
+
+class CurrencyToSelectedEvent extends HomeEvent {
+  final CurrencyEntity selectedCurrencyTo;
+
+  CurrencyToSelectedEvent({required this.selectedCurrencyTo});
 }
 
 class ValueFromUpdatedEvent extends HomeEvent {

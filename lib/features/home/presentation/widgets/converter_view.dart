@@ -15,7 +15,7 @@ class ConverterView extends StatefulWidget {
 class _ConverterViewState extends State<ConverterView> {
   String _valueFrom = "";
 
-  void showCountriesDoalog(BuildContext context) {
+  void showCountriesDoalog(BuildContext context, {required bool from}) {
     context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: _valueFrom));
     showGeneralDialog(
       context: context,
@@ -29,10 +29,10 @@ class _ConverterViewState extends State<ConverterView> {
                 flex: 2,
                 child: Container(),
               ),
-              const Flexible(
+              Flexible(
                 flex: 8,
                 child: SizedBox.expand(
-                  child: CurrencyListDilog(),
+                  child: CurrencyListDilog(from: from,),
                 ),
               ),
             ],
@@ -104,7 +104,7 @@ class _ConverterViewState extends State<ConverterView> {
                     builder: (context, valState) {
                       return ExchangeWidget(
                         header: "Хочу обменять:",
-                        footer: state.selectedCurrency?.fromRUR ?? "Not Set",
+                        footer: state.fromExpression,
                         currencyCode: 'RUR',
                         countryCode: 'RU',
                         text: valState.valueFrom,
@@ -112,6 +112,7 @@ class _ConverterViewState extends State<ConverterView> {
                           _valueFrom = val;
                           context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
                         },
+                        onCountryPressed: () => showCountriesDoalog(context, from: true),
                       );
                     },
                     buildWhen: (previous, current) => current is ValueFromState || current is ValuesFromToState,
@@ -133,12 +134,12 @@ class _ConverterViewState extends State<ConverterView> {
                     builder: (context, valState) {
                       return ExchangeWidget(
                         header: "Вы получите:",
-                        footer: state.selectedCurrency?.toRUR ?? "Not Set",
+                        footer: state.toExpression,
                         currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
                         countryCode: state.selectedCurrency?.countryCode ?? "zz",
                         text: valState.valueTo,
                         onValueChanged: (val) => context.read<HomeBloc>().add(ValueToUpdatedEvent(valueTo: val)),
-                        onCountryPressed: () => showCountriesDoalog(context),
+                        onCountryPressed: () => showCountriesDoalog(context, from: false),
                       );
                     },
                     buildWhen: (previous, current) => current is ValueToState || current is ValuesFromToState,

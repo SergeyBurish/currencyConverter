@@ -4,7 +4,8 @@ import 'package:currency_converter/features/home/domain/entity/currency_entity.d
 abstract interface class CurrencyProducer{
     Future<CurrencyEntity?> getDefaultCurrency();
     Future<List<CurrencyEntity>?> getCurrenciesList();
-    Future<void> setSelectedCurrency(CurrencyEntity currency);
+    Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
+    Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
     Future<void> setValueFrom(String valueFrom);
     Future<String> getValueTo(String valueFrom);
     Future<String> getValueFrom(String valueTo);
@@ -13,8 +14,10 @@ abstract interface class CurrencyProducer{
 
 abstract interface class CurrencyRepository{
     Future<CurrenciesNotch?> getCurrenciesNotch();
-    Future<void> setSelectedCurrency(CurrencyEntity currency);
-    Future<CurrencyEntity?> getSelectedCurrency();
+    Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
+    Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
+    Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> 
+      getSelectedCurrencies();
     Future<void> setValueFrom(String valueFrom);
     Future<String?> getValueFrom();
 }
@@ -50,9 +53,12 @@ class _HomeUsecaseImp implements CurrencyProducer{
   }
   
   @override
-  Future<void> setSelectedCurrency(CurrencyEntity currency) => repository.setSelectedCurrency(currency);
+  Future<void> setSelectedCurrencyFrom(CurrencyEntity currency) => repository.setSelectedCurrencyFrom(currency);
 
-    @override
+  @override
+  Future<void> setSelectedCurrencyTo(CurrencyEntity currency) => repository.setSelectedCurrencyTo(currency);
+
+  @override
   Future<void> setValueFrom(String valueFrom) => repository.setValueFrom(valueFrom);
   
   @override
@@ -74,11 +80,11 @@ class _HomeUsecaseImp implements CurrencyProducer{
   Future<String> _calculateValueTo(String valueFrom) async {
     String valueTo = "";
     if (valueFrom.isNotEmpty) {
-      CurrencyEntity? selectedCurrency = await repository.getSelectedCurrency();
-      if (selectedCurrency != null) {
+      final currencies = await repository.getSelectedCurrencies();
+      if (currencies.selectedCurrencyTo != null) {
         try {
           final double from = double.parse(valueFrom);
-          final to = from * selectedCurrency.nominal.toDouble() / selectedCurrency.value;
+          final to = from * currencies.selectedCurrencyTo!.nominal.toDouble() / currencies.selectedCurrencyTo!.value;
           valueTo = to.toString();
         } catch (e) {
           print(e);
@@ -91,11 +97,11 @@ class _HomeUsecaseImp implements CurrencyProducer{
   Future<String> _calculateValueFrom(String valueTo) async {
     String valueFrom = "";
     if (valueTo.isNotEmpty) {
-      CurrencyEntity? selectedCurrency = await repository.getSelectedCurrency();
-      if (selectedCurrency != null) {
+      final currencies = await repository.getSelectedCurrencies();
+      if (currencies.selectedCurrencyTo != null) {
         try {
           final double to = double.parse(valueTo);
-          final double from = to * selectedCurrency.value / selectedCurrency.nominal.toDouble();
+          final double from = to * currencies.selectedCurrencyTo!.value / currencies.selectedCurrencyTo!.nominal.toDouble();
           valueFrom = from.toString();
         } catch (e) {
           print(e);

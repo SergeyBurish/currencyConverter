@@ -2,14 +2,20 @@ import 'package:currency_converter/features/home/domain/entity/currency_entity.d
 
 // TODO: DB
 class StoreService {
-  static CurrencyEntity? _selectedCurrency;
+  static CurrencyEntity? _selectedCurrencyFrom;
+  static CurrencyEntity? _selectedCurrencyTo;
   static String? _valueFrom;
-  Future<void> setSelectedCurrency(CurrencyEntity currency) async {
-    _selectedCurrency = currency;
+
+  Future<void> setSelectedCurrencyFrom(CurrencyEntity currency) async {
+    _selectedCurrencyFrom = currency;
   }
 
-  Future<CurrencyEntity?> getSelectedCurrency() async {
-    return _selectedCurrency;
+  Future<void> setSelectedCurrencyTo(CurrencyEntity currency) async {
+    _selectedCurrencyTo = currency;
+  }
+
+  Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> getSelectedCurrencies() async {
+    return (selectedCurrencyFrom: _selectedCurrencyFrom, selectedCurrencyTo: _selectedCurrencyTo);
   }
 
   Future<void> setValueFrom(String valueFrom) async {
