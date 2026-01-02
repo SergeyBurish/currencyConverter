@@ -7,50 +7,52 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
+  final CurrencyProducer currencyProducer;
+  HomeBloc({required this.currencyProducer})
+      : super(HomeInitial()) {
     on<HomeEvent>((event, emit) {
       // TODO: implement event handler
     });
 
     on<HomeScreenInitEvent>((event, emit) async {
-      CurrencyEntity? defCurrency = await HomeUsecase.currencyProducer.getDefaultCurrency();
+      CurrencyEntity? defCurrency = await currencyProducer.getDefaultCurrency();
       if (defCurrency != null) {
-        await HomeUsecase.currencyProducer.setSelectedCurrencyTo(defCurrency);
+        await currencyProducer.setSelectedCurrencyTo(defCurrency);
         emit(SelectedCurrencyState(selectedCurrency: defCurrency));
       }
     });
 
     on<CurrenciesListOpenEvent>((event, emit) async {
-      await HomeUsecase.currencyProducer.setValueFrom(event.valueFrom);
+      await currencyProducer.setValueFrom(event.valueFrom);
 
-      List<CurrencyEntity>? currencies = await HomeUsecase.currencyProducer.getCurrenciesList();
+      List<CurrencyEntity>? currencies = await currencyProducer.getCurrenciesList();
       if (currencies != null) {
         emit(CurrenciesListState(currencies: currencies));
       }
     });
 
     on<CurrencyFromSelectedEvent>((event, emit) async {
-      await HomeUsecase.currencyProducer.setSelectedCurrencyFrom(event.selectedCurrencyFrom);
+      await currencyProducer.setSelectedCurrencyFrom(event.selectedCurrencyFrom);
       // emit(SelectedCurrencyState(selectedCurrency: event.selectedCurrencyTo));
     });
 
     on<CurrencyToSelectedEvent>((event, emit) async {
-      await HomeUsecase.currencyProducer.setSelectedCurrencyTo(event.selectedCurrencyTo);
+      await currencyProducer.setSelectedCurrencyTo(event.selectedCurrencyTo);
       emit(SelectedCurrencyState(selectedCurrency: event.selectedCurrencyTo));
     });
 
     on<ValueFromUpdatedEvent>((event, emit) async {
-      String valueTo =await HomeUsecase.currencyProducer.getValueTo(event.valueFrom);
+      String valueTo =await currencyProducer.getValueTo(event.valueFrom);
       emit(ValueToState(value: valueTo));
     });
 
     on<ValueToUpdatedEvent>((event, emit) async {
-      String valueFrom =await HomeUsecase.currencyProducer.getValueFrom(event.valueTo);
+      String valueFrom =await currencyProducer.getValueFrom(event.valueTo);
       emit(ValueFromState(value: valueFrom));
     });
 
     on<RecalculateValueToEvent>((event, emit) async {
-      final values = await HomeUsecase.currencyProducer.recalculateValueTo();
+      final values = await currencyProducer.recalculateValueTo();
       emit(ValuesFromToState(valueFrom: values.valueFrom, valueTo: values.valueTo));
     });
   }

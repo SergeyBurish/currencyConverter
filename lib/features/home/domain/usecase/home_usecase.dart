@@ -22,19 +22,10 @@ abstract interface class CurrencyRepository{
     Future<String?> getValueFrom();
 }
 
-class HomeUsecase {
-  static late final _HomeUsecaseImp _homeUsecaseImp;
-  static init(CurrencyRepository repository) {
-    _homeUsecaseImp = _HomeUsecaseImp(repository: repository);
-  }
-
-  static CurrencyProducer get currencyProducer => _homeUsecaseImp;
-}
-
-class _HomeUsecaseImp implements CurrencyProducer{
+class HomeUsecase implements CurrencyProducer{
   final CurrencyRepository repository;
 
-  _HomeUsecaseImp({required this.repository});
+  HomeUsecase({required this.repository});
 
   @override
   Future<CurrencyEntity?> getDefaultCurrency() async {

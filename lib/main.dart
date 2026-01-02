@@ -1,20 +1,16 @@
-import 'package:currency_converter/features/home/data/repository/currency_repository.dart';
-import 'package:currency_converter/features/home/domain/usecase/home_usecase.dart';
+import 'package:currency_converter/di/injector.dart';
 import 'package:currency_converter/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  // dependencies
-  HomeUsecase.init(CurrencyRepositoryImp());
-  
+  configureDependencies();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

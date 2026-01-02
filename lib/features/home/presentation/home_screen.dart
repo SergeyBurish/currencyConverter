@@ -1,3 +1,4 @@
+import 'package:currency_converter/di/locator.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/converter_view.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_rates_view.dart';
@@ -11,14 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(),
+      create: (context) => HomeBloc(currencyProducer: Locator.currencyProducer),
       child: const _HomeScreen(),
     );
   }
 }
 
 class _HomeScreen extends StatefulWidget {
-  const _HomeScreen({super.key});
+  const _HomeScreen();
 
   @override
   State<_HomeScreen> createState() => _HomeScreenState();
