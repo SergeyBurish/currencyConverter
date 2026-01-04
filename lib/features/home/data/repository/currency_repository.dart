@@ -5,15 +5,13 @@ import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
 import 'package:currency_converter/features/home/data/mapper/currency_mapper.dart';
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
 import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
-import 'package:currency_converter/features/home/domain/usecase/home_usecase.dart';
+import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
 
 class CurrencyRepositoryImp implements CurrencyRepository{
-  final CbrService _cbrService;
-  final StoreService _storeService;
+  final CurrencyRemoteDataSource remoteDataSource;
+  final CurrencyLocalDataSource localDataSource;
 
-  CurrencyRepositoryImp() : 
-    _cbrService = CbrService(),
-    _storeService = StoreService();
+  CurrencyRepositoryImp({required this.remoteDataSource, required this.localDataSource});
 
   @override
   Future<CurrenciesNotch?> getCurrenciesNotch() async {
@@ -26,7 +24,7 @@ class CurrencyRepositoryImp implements CurrencyRepository{
     }
     
     try {
-      CbrDto response = await _cbrService.getExchangeRates();
+      CbrDto response = await remoteDataSource.getExchangeRates();
       currenciesNotch = CurrencyMapper.fromDto(response);
       if (currenciesNotch != null) {
         CacheService.cache(currenciesNotch);
@@ -39,26 +37,26 @@ class CurrencyRepositoryImp implements CurrencyRepository{
 
   @override
   Future<void> setSelectedCurrencyFrom(CurrencyEntity currency) {
-    return _storeService.setSelectedCurrencyFrom(currency);
+    return localDataSource.setSelectedCurrencyFrom(currency);
   }
 
   @override
   Future<void> setSelectedCurrencyTo(CurrencyEntity currency) {
-    return _storeService.setSelectedCurrencyTo(currency);
+    return localDataSource.setSelectedCurrencyTo(currency);
   }
   
   @override
   Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> getSelectedCurrencies() {
-    return _storeService.getSelectedCurrencies();
+    return localDataSource.getSelectedCurrencies();
   }
   
   @override
   Future<void> setValueFrom(String valueFrom) {
-    return _storeService.setValueFrom(valueFrom);
+    return localDataSource.setValueFrom(valueFrom);
   }
   
   @override
   Future<String?> getValueFrom() {
-    return _storeService.getValueFrom();
+    return localDataSource.getValueFrom();
   }  
 }

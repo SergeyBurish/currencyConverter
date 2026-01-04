@@ -1,5 +1,6 @@
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
 import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
+import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
 
 abstract interface class CurrencyProducer{
     Future<CurrencyEntity?> getDefaultCurrency();
@@ -12,20 +13,10 @@ abstract interface class CurrencyProducer{
     Future<({String valueFrom, String valueTo})> recalculateValueTo();
 }
 
-abstract interface class CurrencyRepository{
-    Future<CurrenciesNotch?> getCurrenciesNotch();
-    Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
-    Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
-    Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> 
-      getSelectedCurrencies();
-    Future<void> setValueFrom(String valueFrom);
-    Future<String?> getValueFrom();
-}
-
-class HomeUsecase implements CurrencyProducer{
+class CurrencyUsecase implements CurrencyProducer{
   final CurrencyRepository repository;
 
-  HomeUsecase({required this.repository});
+  CurrencyUsecase({required this.repository});
 
   @override
   Future<CurrencyEntity?> getDefaultCurrency() async {
