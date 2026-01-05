@@ -1,5 +1,5 @@
-import 'package:currency_converter/features/home/data/data_sources/cbr_service.dart';
-import 'package:currency_converter/features/home/data/data_sources/store_service.dart';
+import 'package:currency_converter/features/home/data/data_sources/remote_data_source.dart';
+import 'package:currency_converter/features/home/data/data_sources/local_data_source.dart';
 import 'package:currency_converter/features/home/data/repository/currency_repository.dart';
 import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
 import 'package:currency_converter/features/home/domain/usecase/home_usecase.dart';

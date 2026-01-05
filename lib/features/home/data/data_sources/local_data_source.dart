@@ -9,7 +9,7 @@ abstract interface class CurrencyLocalDataSource {
 }
 
 // TODO: DB
-class CurrencyLocalDataSourceImp implements CurrencyLocalDataSource { // StoreService
+class CurrencyLocalDataSourceImp implements CurrencyLocalDataSource {
   static CurrencyEntity? _selectedCurrencyFrom;
   static CurrencyEntity? _selectedCurrencyTo;
   static String? _valueFrom;

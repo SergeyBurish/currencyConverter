@@ -10,9 +10,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final CurrencyProducer currencyProducer;
   HomeBloc({required this.currencyProducer})
       : super(HomeInitial()) {
-    // on<HomeEvent>((event, emit) {
-    //   // TODO: implement event handler
-    // });
 
     on<HomeScreenInitEvent>((event, emit) async {
       CurrencyEntity? defCurrency = await currencyProducer.getDefaultCurrency();
