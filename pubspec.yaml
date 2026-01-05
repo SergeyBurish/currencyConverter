@@ -19,6 +19,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   get_it: ^9.2.0
   injectable: ^2.7.1+2
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +31,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - l10n/

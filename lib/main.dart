@@ -1,11 +1,20 @@
 import 'package:currency_converter/di/injector.dart';
 import 'package:currency_converter/features/home/presentation/home_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
   configureDependencies();
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const <Locale>[Locale('en', 'US'), Locale('ru', 'RU')],
+      path: 'l10n',
+      child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +28,9 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         title: 'Currency converter',
+        locale: context.locale,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,

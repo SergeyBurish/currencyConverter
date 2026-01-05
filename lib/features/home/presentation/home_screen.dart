@@ -2,6 +2,7 @@ import 'package:currency_converter/di/locator.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/converter_view.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_rates_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,12 +33,12 @@ class _HomeScreenState extends State<_HomeScreen> {
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
       appBar: AppBar(
         title: Text(
-          "Конвертер валют онлайн", // L10n
+          'currency_converter_title'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 13.sp
-            ),
           ),
+        ),
         leading: const BackButton(),
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
         centerTitle: false,
