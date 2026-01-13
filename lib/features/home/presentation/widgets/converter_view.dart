@@ -1,6 +1,8 @@
+import 'package:currency_converter/app/dm.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/currency_list_dilog/currency_list_dilog.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +15,7 @@ class ConverterView extends StatefulWidget {
 }
 
 class _ConverterViewState extends State<ConverterView> {
-  String _valueFrom = "";
+  String _valueFrom = '';
 
   void showCountriesDoalog(BuildContext context, {required bool from}) {
     context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: _valueFrom));
@@ -32,7 +34,7 @@ class _ConverterViewState extends State<ConverterView> {
               Flexible(
                 flex: 8,
                 child: SizedBox.expand(
-                  child: CurrencyListDilog(from: from,),
+                  child: CurrencyListDilog(from: from),
                 ),
               ),
             ],
@@ -52,17 +54,12 @@ class _ConverterViewState extends State<ConverterView> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Конвертер валют", // L10n
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-            ),
-            Padding(
-              // 1st block: text
-              padding: const EdgeInsets.only(top: 10),
-              child: Container(
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: Dm.s10,
+            children: [
+              Container(
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(77, 244, 209, 102),
                   borderRadius: BorderRadius.circular(10),
@@ -70,18 +67,16 @@ class _ConverterViewState extends State<ConverterView> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
+                    spacing: Dm.s10,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Icon(
                         Icons.textsms_outlined,
                         color: Colors.orange,
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
                       Flexible(
                         child: Text(
-                          "Все переводы курсов конвертер осуществляет на основе стоимости валют по данным ЦБ РФ", // L10n
+                          'conversions_message'.tr(),
                           style: TextStyle(fontSize: 10.sp),
                         ),
                       ),
@@ -89,11 +84,7 @@ class _ConverterViewState extends State<ConverterView> {
                   ),
                 ),
               ),
-            ),
-            Padding(
-              // 2nd block: ru
-              padding: const EdgeInsets.only(top: 10),
-              child: Container(
+              Container(
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(51, 72, 164, 240),
                   borderRadius: BorderRadius.circular(10),
@@ -103,7 +94,6 @@ class _ConverterViewState extends State<ConverterView> {
                   child: BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, valState) {
                       return ExchangeWidget(
-                        header: "Хочу обменять:",
                         footer: state.fromExpression,
                         currencyCode: 'RUR',
                         countryCode: 'RU',
@@ -119,11 +109,7 @@ class _ConverterViewState extends State<ConverterView> {
                   ),
                 ),
               ),
-            ),
-            Padding(
-              // 3rd block: foreign
-              padding: const EdgeInsets.only(top: 10),
-              child: Container(
+              Container(
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(52, 245, 117, 215),
                   borderRadius: BorderRadius.circular(10),
@@ -133,10 +119,9 @@ class _ConverterViewState extends State<ConverterView> {
                   child: BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, valState) {
                       return ExchangeWidget(
-                        header: "Вы получите:",
                         footer: state.toExpression,
-                        currencyCode: state.selectedCurrency?.charCode ?? "Not Set",
-                        countryCode: state.selectedCurrency?.countryCode ?? "zz",
+                        currencyCode: state.selectedCurrency?.charCode ?? 'Not Set',
+                        countryCode: state.selectedCurrency?.countryCode ?? 'Not Set',
                         text: valState.valueTo,
                         onValueChanged: (val) => context.read<HomeBloc>().add(ValueToUpdatedEvent(valueTo: val)),
                         onCountryPressed: () => showCountriesDoalog(context, from: false),
@@ -146,8 +131,8 @@ class _ConverterViewState extends State<ConverterView> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       buildWhen: (previous, current) => current is SelectedCurrencyState,

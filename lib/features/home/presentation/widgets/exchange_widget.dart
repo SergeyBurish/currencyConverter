@@ -1,10 +1,10 @@
+import 'package:currency_converter/app/dm.dart';
 import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ExchangeWidget extends StatefulWidget {
-  final String header;
   final String footer;
   final String currencyCode;
   final String countryCode;
@@ -13,7 +13,6 @@ class ExchangeWidget extends StatefulWidget {
   final void Function()? onCountryPressed;
   const ExchangeWidget({
     super.key, 
-    required this.header, 
     required this.footer, 
     required this.currencyCode,
     required this.countryCode,
@@ -35,10 +34,10 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: Dm.s10,
       children: [
-        Text(widget.header),
-        const SizedBox(height: 10,),
         Row(
+          spacing: Dm.s10,
           children: [
             Expanded(
               child: Container(
@@ -64,7 +63,6 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
                 ),
               )
             ),
-            const SizedBox(width: 10,),
             DoubleIconTextButton( 
               icon1: CircleFlag(countryCode: widget.countryCode,),
               label: Text(widget.currencyCode),
@@ -73,7 +71,6 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
             ),
           ],
         ),
-        const SizedBox(height: 10,),
         Text(widget.footer),
       ],
     );

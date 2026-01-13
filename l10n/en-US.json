@@ -1,3 +1,8 @@
 {
-  "currency_converter_title": "Currency converter"
+  "currency_converter_title": "Currency converter",
+  "converter_title": "Converter",
+  "exchange_rates_title": "Exchange rates",
+  "apply": "Apply",
+  "select_currency": "Select currency",
+  "conversions_message": "The converter performs all exchange rate conversions based on the currency values ​​according to the Central Bank of the Russian Federation."
 }

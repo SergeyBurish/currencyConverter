@@ -1,6 +1,8 @@
+import 'package:currency_converter/app/dm.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/currency_list_dilog/currency_list_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,80 +19,80 @@ class _CurrencyListDilogState extends State<CurrencyListDilog> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Material( // Wrapping the Text widget in a Material widget will also add a default style to your widget: // https://mixable.blog/flutter-red-text-and-yellow-lines-in-text-widget/
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: Dm.maxWidth),
+        decoration: BoxDecoration(
           color: Colors.white,
-          child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Выберите валюту", // L10n
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Material(
+            color: Colors.white,
+            child: BlocBuilder<HomeBloc, HomeState>(
+              buildWhen: (previous, current) => current is CurrenciesListState,
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'select_currency'.tr(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.close)
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: state.currencies.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: CurrencyListItem(
-                            code: state.currencies[index].charCode,
-                            name: state.currencies[index].name,
-                            selected: index == _selectedIndex,
-                            icon: CircleFlag(countryCode: state.currencies[index].countryCode,),
-                            onPressed: () => setState(() => _selectedIndex = index)
-                          )
-                        );
-                      }
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(Icons.close)
+                        ),
+                      ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (widget.from) {
-                          context.read<HomeBloc>().add(CurrencyFromSelectedEvent(selectedCurrencyFrom: state.currencies[_selectedIndex]));
-                        } else {
-                          context.read<HomeBloc>().add(CurrencyToSelectedEvent(selectedCurrencyTo: state.currencies[_selectedIndex]));
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: state.currencies.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: CurrencyListItem(
+                              code: state.currencies[index].charCode,
+                              name: state.currencies[index].name,
+                              selected: index == _selectedIndex,
+                              icon: CircleFlag(countryCode: state.currencies[index].countryCode,),
+                              onPressed: () => setState(() => _selectedIndex = index)
+                            )
+                          );
                         }
-                        context.read<HomeBloc>().add(RecalculateValueToEvent());
-                        Navigator.of(context).pop();
-                      },
-                      style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 0, 26, 255)),
-                        foregroundColor: WidgetStatePropertyAll(Colors.white),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Применить"), // L10n
-                        ],
                       ),
                     ),
-                  )
-                ],
-              );
-            },
-            buildWhen: (previous, current) => current is CurrenciesListState,
+                    Padding(
+                      padding: const EdgeInsets.only(top: Dm.s10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (widget.from) {
+                            context.read<HomeBloc>().add(CurrencyFromSelectedEvent(selectedCurrencyFrom: state.currencies[_selectedIndex]));
+                          } else {
+                            context.read<HomeBloc>().add(CurrencyToSelectedEvent(selectedCurrencyTo: state.currencies[_selectedIndex]));
+                          }
+                          context.read<HomeBloc>().add(RecalculateValueToEvent());
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: const WidgetStatePropertyAll(Color.fromARGB(255, 0, 26, 255)),
+                          foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                          padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: Dm.s20.w)),
+                        ),
+                        child: Text('apply'.tr()),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

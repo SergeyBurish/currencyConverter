@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:currency_converter/app/dm.dart';
 import 'package:currency_converter/di/injector.dart';
 import 'package:currency_converter/features/home/presentation/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,9 +26,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(Dm.designSizeWidth, Dm.designSizeHeight),
       minTextAdapt: true,
       splitScreenMode: true,
+      fontSizeResolver: (fontSize, instance) {
+        final double screenWidth = min(instance.screenWidth, Dm.maxWidth);
+        return fontSize.toDouble() * (screenWidth / Dm.designSizeWidth);
+      },
       child: MaterialApp(
         title: 'Currency converter',
         locale: context.locale,
