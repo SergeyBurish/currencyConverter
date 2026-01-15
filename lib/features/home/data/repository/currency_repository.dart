@@ -1,6 +1,6 @@
 import 'package:currency_converter/features/home/data/data_sources/cache_service.dart';
-import 'package:currency_converter/features/home/data/data_sources/remote_data_source.dart';
 import 'package:currency_converter/features/home/data/data_sources/local_data_source.dart';
+import 'package:currency_converter/features/home/data/data_sources/remote_data_source.dart';
 import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
 import 'package:currency_converter/features/home/data/mapper/currency_mapper.dart';
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
@@ -49,14 +49,4 @@ class CurrencyRepositoryImp implements CurrencyRepository{
   Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> getSelectedCurrencies() {
     return localDataSource.getSelectedCurrencies();
   }
-  
-  @override
-  Future<void> setValueFrom(String valueFrom) {
-    return localDataSource.setValueFrom(valueFrom);
-  }
-  
-  @override
-  Future<String?> getValueFrom() {
-    return localDataSource.getValueFrom();
-  }  
 }

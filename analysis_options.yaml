@@ -11,6 +11,7 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
+    directives_ordering: true
     prefer_const_constructors: true
     prefer_single_quotes: true
 

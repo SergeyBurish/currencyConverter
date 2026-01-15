@@ -16,6 +16,8 @@ class ConverterView extends StatefulWidget {
 
 class _ConverterViewState extends State<ConverterView> {
   String _valueFrom = '';
+  final TextEditingController _fromController = TextEditingController();
+  final TextEditingController _toController = TextEditingController();
 
   void showCountriesDoalog(BuildContext context, {required bool from}) {
     context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: _valueFrom));
@@ -46,96 +48,114 @@ class _ConverterViewState extends State<ConverterView> {
 
   @override
   void initState() {
-    context.read<HomeBloc>().add(HomeScreenInitEvent());
     super.initState();
+    context.read<HomeBloc>().add(HomeScreenInitEvent());
+  }
+
+  @override
+  void dispose() {
+    _fromController.dispose();
+    _toController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: Dm.s10,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(77, 244, 209, 102),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    spacing: Dm.s10,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.textsms_outlined,
-                        color: Colors.orange,
-                      ),
-                      Flexible(
-                        child: Text(
-                          'conversions_message'.tr(),
-                          style: TextStyle(fontSize: 10.sp),
-                        ),
-                      ),
-                    ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: Dm.s10,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(77, 244, 209, 102),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                spacing: Dm.s10,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.textsms_outlined,
+                    color: Colors.orange,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(51, 72, 164, 240),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, valState) {
-                      return ExchangeWidget(
-                        footer: state.fromExpression,
-                        currencyCode: 'RUR',
-                        countryCode: 'RU',
-                        text: valState.valueFrom,
-                        onValueChanged: (val) {
-                          _valueFrom = val;
-                          context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
-                        },
-                        onCountryPressed: () => showCountriesDoalog(context, from: true),
-                      );
-                    },
-                    buildWhen: (previous, current) => current is ValueFromState || current is ValuesFromToState,
+                  Flexible(
+                    child: Text(
+                      'conversions_message'.tr(),
+                      style: TextStyle(fontSize: 10.sp),
+                    ),
                   ),
-                ),
+                ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(52, 245, 117, 215),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, valState) {
-                      return ExchangeWidget(
-                        footer: state.toExpression,
-                        currencyCode: state.selectedCurrency?.charCode ?? 'Not Set',
-                        countryCode: state.selectedCurrency?.countryCode ?? 'Not Set',
-                        text: valState.valueTo,
-                        onValueChanged: (val) => context.read<HomeBloc>().add(ValueToUpdatedEvent(valueTo: val)),
-                        onCountryPressed: () => showCountriesDoalog(context, from: false),
-                      );
-                    },
-                    buildWhen: (previous, current) => current is ValueToState || current is ValuesFromToState,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        );
-      },
-      buildWhen: (previous, current) => current is SelectedCurrencyState,
+          Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(51, 72, 164, 240),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: BlocConsumer<HomeBloc, HomeState>(
+                listenWhen: (previous, current) => previous.valueFrom != current.valueFrom,
+                listener: (context, state) {
+                  if (state.valueFrom != _fromController.text) {
+                    _fromController.text = state.valueFrom;
+                  }
+                },
+                buildWhen: (previous, current) => 
+                    previous.valueFrom != current.valueFrom || 
+                    previous.fromExpression != current.fromExpression,
+                builder: (context, state) {
+                  return ExchangeWidget(
+                    footer: state.fromExpression,
+                    currencyCode: 'RUR',
+                    countryCode: 'RU',
+                    controller: _fromController,
+                    onValueChanged: (val) {
+                      _valueFrom = val;
+                      context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
+                    },
+                    onCountryPressed: () => showCountriesDoalog(context, from: true),
+                  );
+                },
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(52, 245, 117, 215),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: BlocConsumer<HomeBloc, HomeState>(
+                listenWhen: (previous, current) => previous.valueTo != current.valueTo,
+                listener: (context, state) {
+                  if (state.valueTo != _toController.text) {
+                    _toController.text = state.valueTo;
+                  }
+                },
+                buildWhen: (previous, current) => 
+                    previous.valueTo != current.valueTo ||
+                    previous.toExpression != current.toExpression,
+                builder: (context, state) {
+                  return ExchangeWidget(
+                    footer: state.toExpression,
+                    currencyCode: state.selectedCurrency?.charCode ?? 'Not Set',
+                    countryCode: state.selectedCurrency?.countryCode ?? 'Not Set',
+                    controller: _toController,
+                    onValueChanged: (val) => context.read<HomeBloc>().add(ValueToUpdatedEvent(valueTo: val)),
+                    onCountryPressed: () => showCountriesDoalog(context, from: false),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

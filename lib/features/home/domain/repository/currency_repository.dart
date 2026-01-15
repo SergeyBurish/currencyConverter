@@ -7,6 +7,4 @@ abstract interface class CurrencyRepository{
     Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
     Future<({CurrencyEntity? selectedCurrencyFrom, CurrencyEntity? selectedCurrencyTo})> 
       getSelectedCurrencies();
-    Future<void> setValueFrom(String valueFrom);
-    Future<String?> getValueFrom();
 }

@@ -7,10 +7,8 @@ abstract interface class CurrencyProducer{
     Future<List<CurrencyEntity>?> getCurrenciesList();
     Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
     Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
-    Future<void> setValueFrom(String valueFrom);
     Future<String> getValueTo(String valueFrom);
     Future<String> getValueFrom(String valueTo);
-    Future<({String valueFrom, String valueTo})> recalculateValueTo();
 }
 
 class CurrencyUsecase implements CurrencyProducer{
@@ -41,26 +39,8 @@ class CurrencyUsecase implements CurrencyProducer{
   Future<void> setSelectedCurrencyTo(CurrencyEntity currency) => repository.setSelectedCurrencyTo(currency);
 
   @override
-  Future<void> setValueFrom(String valueFrom) => repository.setValueFrom(valueFrom);
-  
-  @override
-  Future<String> getValueTo(String valueFrom) => _calculateValueTo(valueFrom);
-
-  @override
-  Future<String> getValueFrom(String valueTo) => _calculateValueFrom(valueTo);
-  
-  @override
-  Future<({String valueFrom, String valueTo})> recalculateValueTo() async {
-    String? valueFrom = await repository.getValueFrom();
-    if (valueFrom != null) {
-      String? valueTo = await _calculateValueTo(valueFrom);
-      return (valueFrom: valueFrom, valueTo: valueTo);
-    }
-    return (valueFrom: "", valueTo: "");
-  }
-
-  Future<String> _calculateValueTo(String valueFrom) async {
-    String valueTo = "";
+  Future<String> getValueTo(String valueFrom) async {
+    String valueTo = '';
     if (valueFrom.isNotEmpty) {
       final currencies = await repository.getSelectedCurrencies();
       if (currencies.selectedCurrencyTo != null) {
@@ -76,8 +56,9 @@ class CurrencyUsecase implements CurrencyProducer{
     return valueTo;
   }
 
-  Future<String> _calculateValueFrom(String valueTo) async {
-    String valueFrom = "";
+  @override
+  Future<String> getValueFrom(String valueTo) async {
+    String valueFrom = '';
     if (valueTo.isNotEmpty) {
       final currencies = await repository.getSelectedCurrencies();
       if (currencies.selectedCurrencyTo != null) {

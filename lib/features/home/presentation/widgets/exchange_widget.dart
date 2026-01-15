@@ -8,7 +8,7 @@ class ExchangeWidget extends StatefulWidget {
   final String footer;
   final String currencyCode;
   final String countryCode;
-  final String? text;
+  final TextEditingController controller;
   final void Function(String)? onValueChanged;
   final void Function()? onCountryPressed;
   const ExchangeWidget({
@@ -16,7 +16,7 @@ class ExchangeWidget extends StatefulWidget {
     required this.footer, 
     required this.currencyCode,
     required this.countryCode,
-    this.text,
+    required this.controller,
     this.onValueChanged,
     this.onCountryPressed,});
 
@@ -25,13 +25,8 @@ class ExchangeWidget extends StatefulWidget {
 }
 
 class _ExchangeWidgetState extends State<ExchangeWidget> {
-  final TextEditingController _controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    if (widget.text != null) {
-      _controller.text = widget.text!;
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: Dm.s10,
@@ -57,7 +52,7 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
                     ],
-                    controller: _controller,
+                    controller: widget.controller,
                     onChanged: widget.onValueChanged,
                   ),
                 ),

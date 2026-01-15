@@ -1,6 +1,7 @@
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,8 @@ class _ExchangeRatesViewState extends State<ExchangeRatesView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen:(previous, current) => 
+          !listEquals(previous.currencies, current.currencies),
       builder: (context, state) {
         return ListView.builder(
           itemCount: state.currencies.length,
@@ -37,7 +40,6 @@ class _ExchangeRatesViewState extends State<ExchangeRatesView> {
           }
         );
       },
-      buildWhen: (previous, current) => current is CurrenciesListState,
     );
   }
 }
