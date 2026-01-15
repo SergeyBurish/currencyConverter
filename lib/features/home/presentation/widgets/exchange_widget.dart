@@ -61,7 +61,10 @@ class _ExchangeWidgetState extends State<ExchangeWidget> {
             DoubleIconTextButton( 
               icon1: CircleFlag(countryCode: widget.countryCode,),
               label: Text(widget.currencyCode),
-              icon2: const Icon(Icons.keyboard_arrow_down),
+              icon2: Icon(
+                Icons.keyboard_arrow_down,
+                color: widget.onCountryPressed == null ? Colors.grey : null,
+              ),
               onPressed: widget.onCountryPressed,
             ),
           ],

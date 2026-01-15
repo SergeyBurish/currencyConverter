@@ -98,7 +98,7 @@ class _ConverterViewState extends State<ConverterView> {
                       _valueFrom = val;
                       context.read<HomeBloc>().add(ValueFromUpdatedEvent(valueFrom: val));
                     },
-                    onCountryPressed: () => showCountriesDoalog(context, from: true),
+                    // onCountryPressed: () => showCountriesDoalog(context, from: true),
                   );
                 },
               ),
