@@ -1,0 +1,8 @@
+{
+  "currency_converter_title": "Конвертер валют",
+  "converter_title": "Конвертер",
+  "exchange_rates_title": "Курсы валют",
+  "apply": "Применить",
+  "select_currency": "Выберите валюту",
+  "conversions_message": "Все переводы курсов конвертер осуществляет на основе стоимости валют по данным ЦБ РФ"
+}
