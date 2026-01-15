@@ -1,6 +1,5 @@
 import 'package:currency_converter/app/dm.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
-import 'package:currency_converter/features/home/presentation/widgets/currency_list_dilog/currency_list_dilog.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -20,30 +19,11 @@ class _ConverterViewState extends State<ConverterView> {
   final TextEditingController _toController = TextEditingController();
 
   void showCountriesDoalog(BuildContext context, {required bool from}) {
-    context.read<HomeBloc>().add(CurrenciesListOpenEvent(valueFrom: _valueFrom));
-    showGeneralDialog(
-      context: context,
-      transitionDuration: const Duration(milliseconds: 200),
-      pageBuilder: (bc, ania, anis) {
-        return BlocProvider<HomeBloc>.value(
-          value: context.read<HomeBloc>(),
-          child: Column(
-            children: [
-              Flexible(
-                flex: 2,
-                child: Container(),
-              ),
-              Flexible(
-                flex: 8,
-                child: SizedBox.expand(
-                  child: CurrencyListDilog(from: from),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+    context.read<HomeBloc>().add(CurrenciesListOpenEvent(
+      valueFrom: _valueFrom,
+      dialog: true,
+      dialogFrom: from,
+    ));
   }
 
   @override

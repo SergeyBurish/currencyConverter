@@ -8,8 +8,14 @@ class HomeScreenInitEvent extends HomeEvent {
 
 class CurrenciesListOpenEvent extends HomeEvent {
   final String valueFrom;
+  final bool dialog;
+  final bool dialogFrom;
 
-  CurrenciesListOpenEvent({required this.valueFrom});
+  CurrenciesListOpenEvent({
+    required this.valueFrom,
+    this.dialog = false,
+    this.dialogFrom = false,
+  });
 }
 
 class CurrencyFromSelectedEvent extends HomeEvent {

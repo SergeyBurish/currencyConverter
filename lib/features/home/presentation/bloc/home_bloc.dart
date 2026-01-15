@@ -26,6 +26,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<CurrenciesListOpenEvent>((event, emit) async {
+      if (event.dialog) {
+        emit(state.copyWith(
+          dialog: true,
+          dialogFrom: event.dialogFrom,
+        ));
+        emit(state.copyWith.dialog(false));
+      }
       List<CurrencyEntity>? currencies = await currencyProducer.getCurrenciesList();
       if (currencies != null) {
         emit(state.copyWith.currencies(currencies));

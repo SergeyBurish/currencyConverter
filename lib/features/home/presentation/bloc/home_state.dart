@@ -8,6 +8,8 @@ class HomeState {
   final String toExpression;
   final String valueFrom;
   final String valueTo;
+  final bool dialog;
+  final bool dialogFrom;
 
   HomeState._({
     required this.selectedCurrency,
@@ -16,6 +18,8 @@ class HomeState {
     required this.toExpression,
     required this.valueFrom,
     required this.valueTo,
+    required this.dialog,
+    required this.dialogFrom,
   });
 
   HomeState.initial() :
@@ -24,5 +28,7 @@ class HomeState {
     fromExpression = '',
     toExpression = '',
     valueFrom = '',
-    valueTo = '';
+    valueTo = '',
+    dialog = false,
+    dialogFrom = false;
 }

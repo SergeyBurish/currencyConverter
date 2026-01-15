@@ -19,6 +19,10 @@ abstract class _$HomeStateCWProxy {
 
   HomeState valueTo(String valueTo);
 
+  HomeState dialog(bool dialog);
+
+  HomeState dialogFrom(bool dialogFrom);
+
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `HomeState(...).copyWith.fieldName(value)`.
   ///
@@ -33,6 +37,8 @@ abstract class _$HomeStateCWProxy {
     String toExpression,
     String valueFrom,
     String valueTo,
+    bool dialog,
+    bool dialogFrom,
   });
 }
 
@@ -66,6 +72,12 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState valueTo(String valueTo) => call(valueTo: valueTo);
 
   @override
+  HomeState dialog(bool dialog) => call(dialog: dialog);
+
+  @override
+  HomeState dialogFrom(bool dialogFrom) => call(dialogFrom: dialogFrom);
+
+  @override
 
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `HomeState(...).copyWith.fieldName(value)`.
@@ -81,6 +93,8 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
     Object? toExpression = const $CopyWithPlaceholder(),
     Object? valueFrom = const $CopyWithPlaceholder(),
     Object? valueTo = const $CopyWithPlaceholder(),
+    Object? dialog = const $CopyWithPlaceholder(),
+    Object? dialogFrom = const $CopyWithPlaceholder(),
   }) {
     return HomeState._(
       selectedCurrency: selectedCurrency == const $CopyWithPlaceholder()
@@ -110,6 +124,15 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
           ? _value.valueTo
           // ignore: cast_nullable_to_non_nullable
           : valueTo as String,
+      dialog: dialog == const $CopyWithPlaceholder() || dialog == null
+          ? _value.dialog
+          // ignore: cast_nullable_to_non_nullable
+          : dialog as bool,
+      dialogFrom:
+          dialogFrom == const $CopyWithPlaceholder() || dialogFrom == null
+              ? _value.dialogFrom
+              // ignore: cast_nullable_to_non_nullable
+              : dialogFrom as bool,
     );
   }
 }
