@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
 import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
 import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
@@ -19,11 +20,11 @@ class CurrencyUsecase implements CurrencyProducer{
   @override
   Future<CurrencyEntity?> getDefaultCurrency() async {
     CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
-    CurrencyEntity? usd = currenciesNotch?.currencies.firstWhere((element) => element.charCode == "USD");
+    CurrencyEntity? usd = currenciesNotch?.currencies.firstWhereOrNull((element) => element.charCode == 'USD');
     if (usd != null) {
       return usd;
     }
-    return currenciesNotch?.currencies.first;
+    return currenciesNotch?.currencies.firstOrNull;
   }
   
   @override

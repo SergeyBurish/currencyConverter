@@ -21,6 +21,7 @@ dependencies:
   injectable: ^2.7.1+2
   easy_localization: ^3.0.8
   copy_with_extension: ^11.0.0
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
