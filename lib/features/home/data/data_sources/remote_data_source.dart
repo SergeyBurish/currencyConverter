@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
+import 'package:currency_converter/features/home/data/dto/currencies_notch_dto.dart';
 import 'package:dio/dio.dart';
 
 abstract interface class CurrencyRemoteDataSource {
-  Future<CbrDto> getExchangeRates();
+  Future<CurrenciesNotchDto> getExchangeRates();
 }
 
 class CurrencyRemoteDataSourceImp implements CurrencyRemoteDataSource {
@@ -12,8 +12,8 @@ class CurrencyRemoteDataSourceImp implements CurrencyRemoteDataSource {
   final Dio _dio = Dio();
 
   @override
-  Future<CbrDto> getExchangeRates() async {
+  Future<CurrenciesNotchDto> getExchangeRates() async {
     final response = await _dio.get(_baseUrl);
-    return CbrDto.fromApi(json.decode(response.data));
+    return CurrenciesNotchDto.fromJson(json.decode(response.data));
   }
 }

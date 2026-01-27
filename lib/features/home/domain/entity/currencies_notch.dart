@@ -5,5 +5,9 @@ class CurrenciesNotch {
   final DateTime localTimestamp;
   final List<CurrencyEntity> currencies;
 
-  CurrenciesNotch({required this.timestamp, required this.localTimestamp, required this.currencies});
+  CurrenciesNotch({
+    required this.timestamp,
+    required this.localTimestamp,
+    required this.currencies,
+  });
 }

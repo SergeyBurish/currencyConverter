@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:currency_converter/features/home/data/data_sources/remote_data_source.dart';
-import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
+import 'package:currency_converter/features/home/data/dto/currencies_notch_dto.dart';
 
 class MockDataSource implements CurrencyRemoteDataSource {
 
@@ -18,7 +18,6 @@ class MockDataSource implements CurrencyRemoteDataSource {
 "MMK":{"ID":"R02005","NumCode":"104","CharCode":"MMK","Nominal":1000,"Name":"Кьятов","Value":7.0,"Previous":7.0}}}''';
 
   @override
-  Future<CbrDto> getExchangeRates() async {
-    return CbrDto.fromApi(json.decode(mockJson));
-  }
+  Future<CurrenciesNotchDto> getExchangeRates() async => 
+      CurrenciesNotchDto.fromJson(json.decode(mockJson));
 }

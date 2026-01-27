@@ -78,7 +78,6 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState dialogFrom(bool dialogFrom) => call(dialogFrom: dialogFrom);
 
   @override
-
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `HomeState(...).copyWith.fieldName(value)`.
   ///
@@ -103,19 +102,20 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
           : selectedCurrency as CurrencyEntity?,
       currencies:
           currencies == const $CopyWithPlaceholder() || currencies == null
-              ? _value.currencies
-              // ignore: cast_nullable_to_non_nullable
-              : currencies as List<CurrencyEntity>,
-      fromExpression: fromExpression == const $CopyWithPlaceholder() ||
+          ? _value.currencies
+          // ignore: cast_nullable_to_non_nullable
+          : currencies as List<CurrencyEntity>,
+      fromExpression:
+          fromExpression == const $CopyWithPlaceholder() ||
               fromExpression == null
           ? _value.fromExpression
           // ignore: cast_nullable_to_non_nullable
           : fromExpression as String,
       toExpression:
           toExpression == const $CopyWithPlaceholder() || toExpression == null
-              ? _value.toExpression
-              // ignore: cast_nullable_to_non_nullable
-              : toExpression as String,
+          ? _value.toExpression
+          // ignore: cast_nullable_to_non_nullable
+          : toExpression as String,
       valueFrom: valueFrom == const $CopyWithPlaceholder() || valueFrom == null
           ? _value.valueFrom
           // ignore: cast_nullable_to_non_nullable
@@ -130,9 +130,9 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
           : dialog as bool,
       dialogFrom:
           dialogFrom == const $CopyWithPlaceholder() || dialogFrom == null
-              ? _value.dialogFrom
-              // ignore: cast_nullable_to_non_nullable
-              : dialogFrom as bool,
+          ? _value.dialogFrom
+          // ignore: cast_nullable_to_non_nullable
+          : dialogFrom as bool,
     );
   }
 }

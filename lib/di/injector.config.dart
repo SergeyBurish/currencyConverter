@@ -19,27 +19,28 @@ import '../features/home/domain/usecase/home_usecase.dart' as _i951;
 import 'module.dart' as _i946;
 
 extension GetItInjectableX on _i174.GetIt {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
-      this,
-      environment,
-      environmentFilter,
-    );
+    final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final module = _$Module();
     gh.lazySingleton<_i985.CurrencyRemoteDataSource>(
-        () => module.remoteDataSource());
+      () => module.remoteDataSource(),
+    );
     gh.lazySingleton<_i401.CurrencyLocalDataSource>(
-        () => module.localDataSource());
-    gh.lazySingleton<_i774.CurrencyRepository>(() => module.currencyRepository(
-          gh<_i985.CurrencyRemoteDataSource>(),
-          gh<_i401.CurrencyLocalDataSource>(),
-        ));
+      () => module.localDataSource(),
+    );
+    gh.lazySingleton<_i774.CurrencyRepository>(
+      () => module.currencyRepository(
+        gh<_i985.CurrencyRemoteDataSource>(),
+        gh<_i401.CurrencyLocalDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i951.CurrencyProducer>(
-        () => module.currencyProducer(gh<_i774.CurrencyRepository>()));
+      () => module.currencyProducer(gh<_i774.CurrencyRepository>()),
+    );
     return this;
   }
 }

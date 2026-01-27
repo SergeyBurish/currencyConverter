@@ -1,8 +1,7 @@
 import 'package:currency_converter/features/home/data/data_sources/cache_service.dart';
 import 'package:currency_converter/features/home/data/data_sources/local_data_source.dart';
 import 'package:currency_converter/features/home/data/data_sources/remote_data_source.dart';
-import 'package:currency_converter/features/home/data/dto/cbr_dto.dart';
-import 'package:currency_converter/features/home/data/mapper/currency_mapper.dart';
+import 'package:currency_converter/features/home/data/dto/currencies_notch_dto.dart';
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
 import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
 import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
@@ -24,11 +23,9 @@ class CurrencyRepositoryImp implements CurrencyRepository{
     }
     
     try {
-      CbrDto response = await remoteDataSource.getExchangeRates();
-      currenciesNotch = CurrencyMapper.fromDto(response);
-      if (currenciesNotch != null) {
-        CacheService.cache(currenciesNotch);
-      }
+      CurrenciesNotchDto response = await remoteDataSource.getExchangeRates();
+      currenciesNotch = response.toCurrenciesNotch;
+      CacheService.cache(currenciesNotch);
       return currenciesNotch;
     } catch (e) {
       return null;
