@@ -1,3 +1,6 @@
+import 'package:currency_converter/app/theme/app_theme.dart';
+import 'package:currency_converter/app/theme/color_scheme.dart';
+import 'package:currency_converter/app/theme/text_styles.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,32 +16,38 @@ class CurrencyListItem extends StatelessWidget {
     required this.name, 
     required this.icon,
     this.selected = false,
-    this.onPressed,});
-
-
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final AppTextStyles textStyles = context.textStyles;
+    final AppColorScheme colorScheme = context.colorScheme;
     return DoubleIconTextButton(
       label: RichText(text: 
         TextSpan(
-          style: const TextStyle(color: Colors.black),
           children: <TextSpan>[
-            TextSpan(text: code,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-            TextSpan(text: " / $name")
+            TextSpan(
+              text: code,
+              style: textStyles.dialogCurrencyCode,
+            ),
+            TextSpan(
+              text: ' / $name',
+              style: textStyles.dialogCurrencyName,
+            )
           ]
         ),
       ), 
       icon1: icon,
       icon2: selected 
-        ? const Icon(Icons.trip_origin, color: Colors.red,)
-        : const Icon(Icons.panorama_fish_eye, color: Colors.black12,),
+        ? Icon(Icons.trip_origin, color: colorScheme.dialogIconSelected,)
+        : Icon(Icons.panorama_fish_eye, color: colorScheme.dialogIcon,),
       expanded: true,
       bordered: selected, 
       bgColor: selected 
-        ? Colors.white 
-        : const Color.fromARGB(107, 214, 231, 244),
-      onPressed: onPressed,);
+        ? colorScheme.itemBackgroundSelected
+        : colorScheme.itemBackground,
+      onPressed: onPressed,
+    );
   }
 }

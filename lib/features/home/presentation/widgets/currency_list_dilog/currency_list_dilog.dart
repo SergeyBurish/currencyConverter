@@ -1,4 +1,5 @@
 import 'package:currency_converter/app/dm.dart';
+import 'package:currency_converter/app/theme/app_theme.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/currency_list_dilog/currency_list_item.dart';
@@ -83,12 +84,13 @@ class _CurrencyListDilogState extends State<CurrencyListDilog> {
                           bloc.add(RecalculateValueToEvent());
                           Navigator.of(context).pop();
                         },
-                        style: ButtonStyle(
-                          backgroundColor: const WidgetStatePropertyAll(Color.fromARGB(255, 0, 26, 255)),
-                          foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                        style: context.buttonStyles.dialogButton.copyWith(
                           padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: Dm.s20.w)),
                         ),
-                        child: Text('apply'.tr()),
+                        child: Text(
+                          'apply'.tr(),
+                          style: context.textStyles.buttonText,
+                        ),
                       ),
                     )
                   ],

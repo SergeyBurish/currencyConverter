@@ -1,3 +1,4 @@
+import 'package:currency_converter/app/theme/app_theme.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/circle_flag.dart';
 import 'package:currency_converter/features/home/presentation/widgets/double_icon_text_button.dart';
@@ -34,7 +35,7 @@ class _ExchangeRatesViewState extends State<ExchangeRatesView> {
                 icon1: CircleFlag(countryCode: state.currencies[index].countryCode,),
                 label: Text("${state.currencies[index].charCode}: ${state.currencies[index].value}${state.currencies[index].nominal > 1 ? " за ${state.currencies[index].nominal}" : ""}"),
                 expanded: true,
-                bgColor: const Color.fromARGB(107, 214, 231, 244),
+                bgColor: context.colorScheme.itemBackground
               ),
             );
           }

@@ -1,4 +1,6 @@
 import 'package:currency_converter/app/dm.dart';
+import 'package:currency_converter/app/theme/app_theme.dart';
+import 'package:currency_converter/app/theme/color_scheme.dart';
 import 'package:currency_converter/features/home/presentation/bloc/home_bloc.dart';
 import 'package:currency_converter/features/home/presentation/widgets/exchange_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -41,6 +43,7 @@ class _ConverterViewState extends State<ConverterView> {
 
   @override
   Widget build(BuildContext context) {
+    final AppColorScheme colorScheme = context.colorScheme;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +51,7 @@ class _ConverterViewState extends State<ConverterView> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(77, 244, 209, 102),
+              color: colorScheme.messageBackground,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
@@ -57,9 +60,9 @@ class _ConverterViewState extends State<ConverterView> {
                 spacing: Dm.s10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.textsms_outlined,
-                    color: Colors.orange,
+                    color: colorScheme.messageIcon,
                   ),
                   Flexible(
                     child: Text(
@@ -73,7 +76,7 @@ class _ConverterViewState extends State<ConverterView> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(51, 72, 164, 240),
+              color: colorScheme.fromBackground,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
@@ -106,7 +109,7 @@ class _ConverterViewState extends State<ConverterView> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(52, 245, 117, 215),
+              color: colorScheme.toBackground,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(

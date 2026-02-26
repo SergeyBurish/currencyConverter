@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:currency_converter/app/dm.dart';
+import 'package:currency_converter/app/theme/app_theme.dart';
 import 'package:currency_converter/di/injector.dart';
 import 'package:currency_converter/features/home/presentation/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -38,10 +39,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.createLightTheme(),
         home: const HomeScreen(),
       ),
     );
