@@ -7,6 +7,8 @@ part of 'home_bloc.dart';
 // **************************************************************************
 
 abstract class _$HomeStateCWProxy {
+  HomeState status(HomeStatus status);
+
   HomeState selectedCurrency(CurrencyEntity? selectedCurrency);
 
   HomeState currencies(List<CurrencyEntity> currencies);
@@ -31,6 +33,7 @@ abstract class _$HomeStateCWProxy {
   /// HomeState(...).copyWith(id: 12, name: "My name")
   /// ```
   HomeState call({
+    HomeStatus status,
     CurrencyEntity? selectedCurrency,
     List<CurrencyEntity> currencies,
     String fromExpression,
@@ -48,6 +51,9 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   const _$HomeStateCWProxyImpl(this._value);
 
   final HomeState _value;
+
+  @override
+  HomeState status(HomeStatus status) => call(status: status);
 
   @override
   HomeState selectedCurrency(CurrencyEntity? selectedCurrency) =>
@@ -86,6 +92,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   /// HomeState(...).copyWith(id: 12, name: "My name")
   /// ```
   HomeState call({
+    Object? status = const $CopyWithPlaceholder(),
     Object? selectedCurrency = const $CopyWithPlaceholder(),
     Object? currencies = const $CopyWithPlaceholder(),
     Object? fromExpression = const $CopyWithPlaceholder(),
@@ -96,6 +103,10 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
     Object? dialogFrom = const $CopyWithPlaceholder(),
   }) {
     return HomeState._(
+      status: status == const $CopyWithPlaceholder() || status == null
+          ? _value.status
+          // ignore: cast_nullable_to_non_nullable
+          : status as HomeStatus,
       selectedCurrency: selectedCurrency == const $CopyWithPlaceholder()
           ? _value.selectedCurrency
           // ignore: cast_nullable_to_non_nullable

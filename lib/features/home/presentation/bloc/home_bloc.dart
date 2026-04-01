@@ -14,15 +14,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : super(HomeState.initial()) {
 
     on<HomeScreenInitEvent>((event, emit) async {
-      CurrencyEntity? defCurrency = await currencyProducer.getDefaultCurrency();
-      if (defCurrency != null) {
-        await currencyProducer.setSelectedCurrencyTo(defCurrency);
-        emit(state.copyWith(
-          selectedCurrency: defCurrency,
-          fromExpression: defCurrency.fromRUR,
-          toExpression: defCurrency.toRUR,
-        ));
-      }
+      emit(state.copyWith.status(HomeStatus.inProgress));
+
+      final output = await currencyProducer.getDefaultCurrency();
+      output.fold(
+        ifLeft: (_) => emit(state.copyWith.status(HomeStatus.error)),
+        ifRight: (CurrencyEntity defCurrency) async {
+          emit(state.copyWith(
+            status: HomeStatus.success,
+            selectedCurrency: defCurrency,
+            fromExpression: defCurrency.fromRUR,
+            toExpression: defCurrency.toRUR,
+          ));
+        }
+      );
     });
 
     on<CurrenciesListOpenEvent>((event, emit) async {
@@ -33,10 +38,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ));
         emit(state.copyWith.dialog(false));
       }
-      List<CurrencyEntity>? currencies = await currencyProducer.getCurrenciesList();
-      if (currencies != null) {
-        emit(state.copyWith.currencies(currencies));
-      }
+      final output = await currencyProducer.getCurrenciesList();
+      output.fold(
+        ifLeft: (_) => emit(state.copyWith.status(HomeStatus.error)),
+        ifRight: (List<CurrencyEntity> currencies) async {
+          emit(state.copyWith(
+            status: HomeStatus.success,
+            currencies: currencies,
+          ));
+        }
+      );
     });
 
     on<CurrencyFromSelectedEvent>((event, emit) async {

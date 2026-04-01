@@ -1,7 +1,15 @@
 part of 'home_bloc.dart';
 
+enum HomeStatus {
+  idle,
+  inProgress,
+  success,
+  error,
+}
+
 @CopyWith(constructor: '_')
 class HomeState {
+  final HomeStatus status;
   final CurrencyEntity? selectedCurrency;
   final List<CurrencyEntity> currencies;
   final String fromExpression;
@@ -12,6 +20,7 @@ class HomeState {
   final bool dialogFrom;
 
   HomeState._({
+    required this.status,
     required this.selectedCurrency,
     required this.currencies,
     required this.fromExpression,
@@ -23,6 +32,7 @@ class HomeState {
   });
 
   HomeState.initial() :
+    status = HomeStatus.idle,
     selectedCurrency = null,
     currencies = [],
     fromExpression = '',

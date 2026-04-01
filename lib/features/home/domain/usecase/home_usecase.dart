@@ -2,14 +2,15 @@ import 'package:collection/collection.dart';
 import 'package:currency_converter/features/home/domain/entity/currencies_notch.dart';
 import 'package:currency_converter/features/home/domain/entity/currency_entity.dart';
 import 'package:currency_converter/features/home/domain/repository/currency_repository.dart';
+import 'package:dart_either/dart_either.dart';
 
 abstract interface class CurrencyProducer{
-    Future<CurrencyEntity?> getDefaultCurrency();
-    Future<List<CurrencyEntity>?> getCurrenciesList();
-    Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
-    Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
-    Future<String> getValueTo(String valueFrom);
-    Future<String> getValueFrom(String valueTo);
+  Future<Either<void, CurrencyEntity>> getDefaultCurrency();
+  Future<Either<void, List<CurrencyEntity>>> getCurrenciesList();
+  Future<void> setSelectedCurrencyFrom(CurrencyEntity currency);
+  Future<void> setSelectedCurrencyTo(CurrencyEntity currency);
+  Future<String> getValueTo(String valueFrom);
+  Future<String> getValueFrom(String valueTo);
 }
 
 class CurrencyUsecase implements CurrencyProducer{
@@ -18,19 +19,25 @@ class CurrencyUsecase implements CurrencyProducer{
   CurrencyUsecase({required this.repository});
 
   @override
-  Future<CurrencyEntity?> getDefaultCurrency() async {
+  Future<Either<void, CurrencyEntity>> getDefaultCurrency() async {
     CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
     CurrencyEntity? usd = currenciesNotch?.currencies.firstWhereOrNull((element) => element.charCode == 'USD');
-    if (usd != null) {
-      return usd;
+    CurrencyEntity? defaultCurrency = usd ?? currenciesNotch?.currencies.firstOrNull;
+
+    if (defaultCurrency != null) {
+      await repository.setSelectedCurrencyTo(defaultCurrency); // TODO: refactor
+      return Right(defaultCurrency);
     }
-    return currenciesNotch?.currencies.firstOrNull;
+    return const Left(null);
   }
   
   @override
-  Future<List<CurrencyEntity>?> getCurrenciesList() async {
+  Future<Either<void, List<CurrencyEntity>>> getCurrenciesList() async {
     CurrenciesNotch? currenciesNotch = await repository.getCurrenciesNotch();
-    return currenciesNotch?.currencies;
+    if (currenciesNotch != null) {
+      return Right(currenciesNotch.currencies);
+    }
+    return const Left(null);
   }
   
   @override
